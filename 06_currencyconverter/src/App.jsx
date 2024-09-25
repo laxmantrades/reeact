@@ -6,30 +6,31 @@ import InputBox from './components/Inputbox'
 import UseCurrencyInfo from './customhook/UseCurrencyInfo'
 
 function App() {
-  const [amount, setAmount] = useState(0)
-  const [from,setFrom]=useState("dkk")
-  const [to,setTO]=useState("npr")
-  const [convertedamount,setConvertedamount]=useState(0)
+    const [amount,setAmount]=useState("")
+    const [from,setFrom]=useState("dkk")
+    const [to,setTo]=useState("npr")
+    
+    const[convertedamount,setConvertedAmount]=useState(0)
+    const currencyInfo=UseCurrencyInfo(from)
+    const option=Object.keys(currencyInfo)
+    
 
-  const currencyInfo=UseCurrencyInfo(from)
-  const option= Object.keys(currencyInfo)
+    const convert=()=>setConvertedAmount((amount*currencyInfo[to]).toFixed(3))
 
-  const swap=()=>{
-    setFrom(to)
-    setTO(from)
-    setConvertedamount(amount)
-    setAmount(convertedamount)
-   
-  }
- const convert=()=>{
-    setConvertedamount(amount*currencyInfo[to])
- } 
+    const swap=()=>{
+        setFrom(to)
+        setTo(from)
+        setAmount(convertedamount)
+        setConvertedAmount(amount)
+    }
+  
+    
 
   return (
     <div
         className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
         style={{
-            backgroundImage: `url('https://images.pexels.com/photos/4497591/pexels-photo-4497591.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
+            backgroundImage: `url('https://images.pexels.com/photos/17804518/pexels-photo-17804518/free-photo-of-lake-in-mountains-in-switzerland.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
         }}
     >
         <div className="w-full">
@@ -45,11 +46,10 @@ function App() {
                         <InputBox
                             label="From"
                             amount={amount}
-                            onCurrencyChange={(currency)=>setFrom(currency)}
-                            currencyOptions={option}
                             currencyDefault={from}
+                            currencyOptions={option}
+                            onCurrencyChange={(currency)=>setFrom(currency)}
                             onAmountChange={(amount)=>setAmount(amount)}
-                    
                             
                         />
                     </div>
@@ -65,16 +65,16 @@ function App() {
                     <div className="w-full mt-1 mb-4">
                         <InputBox
                             label="To"
-                            amount={convertedamount}
                             currencyOptions={option}
-                            onCurrencyChange={(currency) => setTO(currency)}
-                            select={to}
                             currencyDefault={to}
+                            amount={convertedamount}
+                            onCurrencyChange={(currency)=>setTo(currency)}
+                
                             
                         />
                     </div>
                     <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
-                        Convert {from.toUpperCase() } to {to.toUpperCase()}
+                        Convert {from.toUpperCase()} to {to.toUpperCase()}
                     </button>
                 </form>
             </div>
@@ -82,5 +82,4 @@ function App() {
     </div>
 );
 }
-
 export default App
