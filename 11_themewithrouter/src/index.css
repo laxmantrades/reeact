@@ -1,3 +1,16 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Add any base styles that apply globally */
+  html {
+    @apply bg-white text-black; /* Default light mode */
+  }
+
+  /* Dark mode styles */
+  html.dark {
+    @apply bg-gray-900 text-white; /* Default dark mode */
+  }
+}
